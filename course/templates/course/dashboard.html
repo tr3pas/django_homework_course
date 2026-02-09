@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %} Dashboard {% endblock %}
+
+
+{% block content %}
+    <h1>Мій Dashboard</h1>
+        <hr>
+    <h2>Обрані курси</h2>
+
+    {% if courses %}
+            {% for sc in courses %}
+                <p><strong>Назва курсу :</strong> {{ sc.course.title }}</p>               
+                <p><strong>Пріоритет :</strong> {{ sc.priority }}</p>       
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>Ви ще не обрали жодного курсу.</p>
+    {% endif %}
+
+
+{% endblock %}

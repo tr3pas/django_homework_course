@@ -1,0 +1,26 @@
+
+{% extends "base.html" %}
+
+{% block title %} Register {% endblock %}
+
+{% block content %}
+  <h2>Register new User </h2>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {{ formset.management_form }}
+    {% for form in formset %}
+        <div class="form-row">
+            {{ form.course.label_tag }} {{ form.course }}
+            {{ form.priority.label_tag }} {{ form.priority }}
+            {% if form.errors %}
+                <div class="errors">{{ form.errors }}</div>
+            {% endif %}
+        </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Реєстрація</button>
+  </form>
+
+  
+{% endblock %}
