@@ -5,9 +5,10 @@ from django.contrib import messages
 from django.contrib.auth import login,authenticate,logout
 from django.contrib.auth.decorators import login_required
 from .models import StudentCourses
+from django.views.decorators.cache import cache_page
 
 # Create your views here.
-
+@cache_page(5* 60)
 def index(request: HttpRequest):
     return render(request, "course/index.html")
 
@@ -56,14 +57,15 @@ def login_view(request):
         form = LoginForm()
 
     return render(request, "registration/login.html", {"form": form})
-
+@cache_page(60)
 @login_required
 def profile(request):
     return render(request, "course/profile.html")
 
+@cache_page(60)
 @login_required
 def dashboard(request):
-    courses = StudentCourses.objects.filter(student=request.user)
+    courses = StudentCourses.objects.select_related("course").defer('student').filter(student=request.user) # оптимізація
     return render(request, "course/dashboard.html", {"courses": courses})
 
 @login_required
