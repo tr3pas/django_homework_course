@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -138,3 +142,9 @@ INTERNAL_IPS = [
         "LOCATION": "unique-snowflake"
     }
 }
+
+
+DEBUG = False
+SECRET_KEY = os.getenv("SECRET_KEY", "default")
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
